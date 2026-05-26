@@ -1,0 +1,86 @@
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: #f5f5f5;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+
+    img {
+      width: 120px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #ff6b35;
+    }
+
+    .busca {
+      display: flex;
+      gap: 1rem;
+
+      input {
+        width: 320px;
+        padding: 0.9rem 1rem;
+        border: none;
+        border-radius: 10px;
+        outline: none;
+        font-size: 1rem;
+      }
+
+      button {
+        padding: 0.9rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        background: #ff6b35;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  .receitas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+
+    .cards {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: 0.2s;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
+
+      h3 {
+        padding: 1rem 1rem 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      p {
+        padding: 0 1rem 1rem;
+        color: #666;
+      }
+    }
+  }
+}

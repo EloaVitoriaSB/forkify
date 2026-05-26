@@ -1,0 +1,54 @@
+<div class="container">
+
+  <div class="header">
+
+      <img src="logo.png" alt="Logo do Forkify" />
+      <h1>Forkify</h1>
+
+
+    <div class="busca">
+      <input type="text" #searchInput placeholder="Buscar receita..." />
+
+      <button (click)="buscarReceitas(searchInput.value)">
+        Buscar
+      </button>
+
+    </div>
+
+  </div>
+
+
+  @if (loading) {
+    <div>
+      Carregando receitas...
+    </div>
+  }
+
+
+  @if (erro) {
+    <div>
+      {{ erro }}
+    </div>
+  }
+
+  <div class="receitas">
+
+    @if (!loading && receitas.length > 0) {
+
+      @for( receita of receitas; track receita.id) {
+
+        <div class="cards ">
+          <img [src]="receita.image_url" [alt]="receita.title" />
+
+          <h3>{{ receita.title }}</h3>
+
+          <p>{{ receita.publisher }}</p>
+
+        </div>
+
+      }
+    }
+
+  </div>
+</div>
+
