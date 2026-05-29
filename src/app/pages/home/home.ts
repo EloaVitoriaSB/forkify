@@ -1,13 +1,14 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReceitasService } from '../../core/services/receitas.service';
-import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { Receita } from '../../core/models/receita.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -16,15 +17,13 @@ export class Home implements OnInit, OnDestroy {
   private receitasService = inject(ReceitasService);
   private destroy$ = new Subject<void>()
 
-  receitas: Receita[] = [];
+  receitas= signal<Receita[]>([])
 
   loading = false;
 
   erro = '';
 
-  query = '';
-
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.buscarReceitas('pizza');
   }
 
@@ -35,21 +34,25 @@ export class Home implements OnInit, OnDestroy {
     this.erro = '';
 
     this.receitasService.getTodasReceitas(query)
-    .pipe(takeUntil(this.destroy$))
-    .subscribe({
-      next: (res) => {
-        this.receitas = res.data.recipes;
-        this.loading = false;
-      },
-      error: () => {
-        this.erro = 'Erro ao carregar receitas';
-        this.loading = false;
-      }
-    });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res) => {
+          this.receitas.set(res.data.recipes);
 
+          console.log('RECEITAS', this.receitas);
+
+          this.loading = false;
+        },
+        error: () => {
+          console.error('Erro ao carregar receitas');
+          console.log(  this.erro);
+          this.erro = 'Erro ao carregar receitas';
+          this.loading = false;
+        }
+      });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }

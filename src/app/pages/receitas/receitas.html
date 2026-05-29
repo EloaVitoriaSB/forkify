@@ -1,0 +1,26 @@
+<div class="container">
+  @for (receita of receitas(); track receita.id) {
+
+  <div class="header">
+
+    <div class="foto-receita">
+      <img [src]="receita.image_url " [alt]="receita.title" loading="lazy" />
+    </div>
+
+    <div class="titulo-receita">
+      <h1>{{ receita.title }}</h1>
+      <p>{{ receita.publisher }}</p>
+    </div>
+
+
+
+  </div>
+
+
+  }
+
+
+
+
+
+</div>
