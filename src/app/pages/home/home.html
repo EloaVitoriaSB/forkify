@@ -4,7 +4,9 @@
 
     <div class="logo">
       <img src="logo.png" alt="Logo do Forkify" />
+    </div>
 
+    <div class="titulo">
       <h1>Forkify</h1>
     </div>
 
@@ -20,13 +22,18 @@
 
   </div>
 
-  @if (receitas().length > 0){
+  @if (loading()) {
+    <div class="spinner">
+      <div class="loader"></div>
+    </div>
+  }
+
   <div class="receitas">
 
     @for (receita of receitas(); track receita.id) {
 
     <div class="cards">
-        <a href="/receita/{{ receita.id }}">
+      <a href="/receita/{{ receita.id }}">
         <img [src]="receita.image_url" [alt]="receita.title" loading="lazy" />
         <h3>{{ receita.title }}</h3>
         <p>{{ receita.publisher }}</p>
@@ -36,16 +43,4 @@
     }
 
   </div>
-  }@else {
-  <p>carregando receitas...</p>
-  }
-
-  @if (erro) {
-
-  <div>
-    {{ erro }}
-  </div>
-
-  }
-
 </div>
