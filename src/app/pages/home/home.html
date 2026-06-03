@@ -12,9 +12,10 @@
 
     <div class="busca">
 
-      <input type="text" #searchInput placeholder="Buscar receita..." />
+      <input type="text" #searchInput placeholder="Buscar receita..."
+        (keyup.enter)="realizarNovaBusca(searchInput.value)" />
 
-      <button (click)="buscarReceitas(searchInput.value)">
+      <button (click)="realizarNovaBusca(searchInput.value)">
         Buscar
       </button>
 
@@ -23,9 +24,9 @@
   </div>
 
   @if (loading()) {
-    <div class="spinner">
-      <div class="loader"></div>
-    </div>
+  <div class="spinner">
+    <div class="loader"></div>
+  </div>
   }
 
   <div class="receitas">
@@ -33,10 +34,24 @@
     @for (receita of receitas(); track receita.id) {
 
     <div class="cards">
-      <a href="/receita/{{ receita.id }}">
+      <a [routerLink]="['/receita', receita.id]">
         <img [src]="receita.image_url" [alt]="receita.title" loading="lazy" />
         <h3>{{ receita.title }}</h3>
+
         <p>{{ receita.publisher }}</p>
+
+        <div class="favoritos">
+
+          <svg width="30px" height="30px" viewBox="0 0 24 24" (click)="favoritoService.toggleFavorito(receita.id)" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.6901C2 5.6001 4.49 3.1001 7.56 3.1001C9.38 3.1001 10.99 3.9801 12 5.3401C13.01 3.9801 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.6001 22 8.6901C22 15.6901 15.52 19.8201 12.62 20.8101Z"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+          </svg>
+        </div>
       </a>
 
     </div>

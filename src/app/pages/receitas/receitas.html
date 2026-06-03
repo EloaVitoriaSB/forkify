@@ -1,12 +1,12 @@
 @if (loading()) {
-    <div class="spinner">
-      <div class="loader"></div>
-    </div>
-  }
+<div class="spinner">
+  <div class="loader"></div>
+</div>
+}
 
 <div class="container">
 
-  <a href="/"><svg fill="#e87102" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+  <a (click)="voltarPagina()"><svg fill="#e87102" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink" width="50px" height="50px" viewBox="0 0 70 70"
       enable-background="new 0 0 70 70" xml:space="preserve" stroke="#e87102">
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -51,13 +51,12 @@
 
         <h2>ingredients</h2>
 
-        @for (ingrediente of ingredientes(); track ingrediente) {
-
         <ul>
+          @for (ingrediente of ingredientes(); track ingrediente) {
           <li>{{ ingrediente.quantity }} {{ ingrediente.unit }} {{ ingrediente.description }}</li>
-
+          }
         </ul>
-        }
+
 
       </div>
     </div>

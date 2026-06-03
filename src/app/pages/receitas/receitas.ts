@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ReceitasService } from '../../core/services/receitas.service';
 import { LoadingService } from '../../core/services/loading.service';
 import { Receita, Ingrediente } from '../../core/models/receita.model';
+import { Location } from '@angular/common';
 
-import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -19,12 +19,19 @@ export class Receitas implements OnInit {
   private receitasService = inject(ReceitasService);
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
+  private location = inject(Location);
+
 
   loading = this.loadingService.loading;
   receitas = signal<Receita[]>([])
   ingredientes = signal<Ingrediente[]>([])
 
-  ngOnInit(){
+  ngOnInit() {
+
+    this.destroyRef.onDestroy(() => {
+      console.log('Componente destruído, cancelando assinaturas');
+    });
+
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.carregarReceita(id);
@@ -37,12 +44,12 @@ export class Receitas implements OnInit {
       .subscribe(res => {
         this.receitas.set([res.data.recipe]);
         this.ingredientes.set(res.data.recipe.ingredients);
-        this.destroyRef.onDestroy(() => {
-          console.log('Componente destruído, cancelando assinaturas');
-        });
       })
 
+  }
 
+  voltarPagina() {
+    this.location.back();
   }
 
 

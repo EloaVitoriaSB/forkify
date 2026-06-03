@@ -2,27 +2,45 @@ import { Component, DestroyRef, OnDestroy, OnInit, inject, signal } from '@angul
 import { CommonModule } from '@angular/common';
 import { ReceitasService } from '../../core/services/receitas.service';
 import { LoadingService } from '../../core/services/loading.service';
-import { Subject, takeUntil } from 'rxjs';
+import { FavoritoService } from '../../core/services/favoritos.service';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Receita } from '../../core/models/receita.model';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home implements OnInit{
+export class Home implements OnInit {
 
   private loadingService = inject(LoadingService);
   private receitasService = inject(ReceitasService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  favoritoService = inject(FavoritoService);
+
   destroyRef = inject(DestroyRef);
 
   loading = this.loadingService.loading;
   receitas = signal<Receita[]>([])
 
+  //armazena o termo atual em um signal para usar no html
+  termoBusca = signal<string>('pizza');
+
 
   ngOnInit(): void {
-    this.buscarReceitas('pizza');
+
+    //this.destroyRef.onDestroy(() => {
+     // console.log('Componente destruído, cancelando assinaturas');
+   // });
+
+    //escuta mudanças na url, se clicar em volar ele pega o termo antigo
+    this.route.queryParams.subscribe(params => {
+      const query = params['search'] || 'pizza'; //se nao tiver nada na url, o padrão é pizza
+      this.termoBusca.set(query);
+      this.buscarReceitas(query);
+    });
   }
 
   buscarReceitas(query: string) {
@@ -32,15 +50,20 @@ export class Home implements OnInit{
         next: (res) => {
           this.receitas.set(res.data.recipes);
           console.log('RECEITAS', this.receitas);
-
-          this.destroyRef.onDestroy(() => {
-            console.log('Componente destruído, cancelando assinaturas');
-          });
         },
         error: () => {
           console.error('Erro ao carregar receitas');
         }
       });
+  }
+
+  realizarNovaBusca(termo: string) {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { search: termo },
+      queryParamsHandling: 'merge' // preserva os outros parametros se existirem
+    });
+
   }
 
 }
