@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject,OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReceitasService } from '../../core/services/receitas.service';
 import { LoadingService } from '../../core/services/loading.service';
@@ -45,7 +45,6 @@ export class Receitas implements OnInit {
         this.receitas.set([res.data.recipe]);
         this.ingredientes.set(res.data.recipe.ingredients);
       })
-
   }
 
   voltarPagina() {

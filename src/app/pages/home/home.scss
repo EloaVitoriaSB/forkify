@@ -5,40 +5,48 @@
 
   .header {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 60px;
+    width: 100%;
 
     .logo {
       display: flex;
-      padding-top: 10px;
+      align-items: center;
+      margin-right: 20px;
 
       img {
-        width: 80px;
-        height: 80px;
+        width: 65px;
+        height: 65px;
+        object-fit: contain;
+      }
+
+      .titulo {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--cor-texto-escuro);
+        margin: 0;
       }
     }
 
-    .titulo {
-      position: absolute;
-      font-size: 20px;
-      padding-left: 100px;
-    }
-
-
     .busca {
-      display: flex;
-      margin-top: 25px;
-      padding-left: 550px;
 
+      display: flex;
       input {
         width: 320px;
         padding: 0 20px;
-        height: 60px;
-        border: none;
+        height: 50px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         outline: none;
         font-size: 1rem;
         color: var(--cor-texto-escuro);
         font-family: "Cause", cursive;
+        background: white;
+
+        &:focus {
+          border-color: var(--cor-primaria);
+        }
       }
 
       ::placeholder {
@@ -48,8 +56,7 @@
 
       button {
         width: 100px;
-        height: 60px;
-        padding: 0.9rem 1.5rem;
+        height: 50px;
         border: none;
         border-radius: 10px;
         background: var(--cor-primaria);
@@ -60,7 +67,26 @@
         font-family: "Cause", cursive;
 
         &:hover {
-          transform: translateY(-2px);
+          filter: brightness(0.9);
+        }
+      }
+    }
+
+    .dialog {
+      button {
+        width: 100px;
+        height: 50px;
+        border: none;
+        border-radius: 10px;
+        background: var(--cor-primaria);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+        font-family: "Cause", cursive;
+
+        &:hover {
+          filter: brightness(0.9);
         }
       }
     }
@@ -72,18 +98,15 @@
     gap: 24px;
 
     .cards {
+      position: relative;
       background: white;
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      transition: 0.2s;
-
-      &:hover {
-        transform: translateY(-5px);
-      }
 
       a {
         text-decoration: none;
+        display: block;
 
         img {
           width: 100%;
@@ -92,18 +115,30 @@
         }
 
         h3 {
-          padding: 0 20px;
+          padding: 15px 20px 5px 20px;
+          margin: 0;
         }
 
         p {
-          padding-bottom: 20px;
-          padding-left: 20px;
-          margin-bottom: 20px;
+          padding: 0 20px 20px 20px;
+          margin: 0;
           color: var(--cor-texto-claro);
         }
-
       }
 
+      .favorito-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 2;
+        cursor: pointer;
+        background: white;
+        padding: 8px;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        display: flex;
+
+      }
     }
   }
 }

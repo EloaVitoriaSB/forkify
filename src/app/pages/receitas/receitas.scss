@@ -2,7 +2,7 @@
   display: flex;
   padding: 40px;
 
-  a{
+  a {
     text-decoration: none;
     transition: 0.2s;
     padding-top: 30px;
@@ -11,6 +11,7 @@
       transform: translateY(-2px);
     }
   }
+
   .container-receita {
     max-width: 100%;
     width: 900px;
@@ -31,14 +32,24 @@
         0 2px 4px rgba(0, 0, 0, 0.04);
 
       .foto-receita {
-        flex-shrink: 1;
+        width: 100%;
+        overflow: hidden;
+        /* Garante que os cantos arredondados funcionem perfeitamente */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+        /* Sombra suave exclusiva para a foto */
 
         img {
           width: 100%;
-          height: 400px;
-          object-fit: fill;
+          height: 450px;
+          /* Altura ligeiramente maior para telas grandes */
+          object-fit: cover;
+          /* Preenche o espaço sem distorcer ou deixar espaços vazios */
+          object-position: center;
+          /* Mantém o foco da foto no meio */
           border-radius: 18px;
           display: block;
+          transition: transform 0.3s ease;
+          /* Efeito suave para interações */
         }
       }
 

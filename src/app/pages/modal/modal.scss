@@ -1,0 +1,231 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 40px 20px 80px 20px;
+  width: 100%;
+  max-height: 90vh;
+  background-color: var(--cor-fundo);
+  border-radius: 20px;
+  position: relative;
+  box-sizing: border-box;
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: "Cause", cursive;
+    color: #454545;
+
+    &:focus {
+      outline: none;
+      border-color: var(--cor-secundaria);
+    }
+  }
+
+  ::placeholder {
+    color: var(--cor-texto-claro);
+    font-family: "Cause", cursive;
+  }
+
+  p {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--cor-terciaria);
+  }
+
+  h2 {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    color: var(--cor-primaria);
+  }
+
+  .fechar-dialog {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+
+    button {
+      background: none;
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      color: #888;
+      cursor: pointer;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #ff4d4d;
+      }
+    }
+  }
+
+  .form-receita {
+    flex: 1;
+    border: 1px solid var(--cor-borda);
+    border-radius: 20px;
+    padding: 25px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow-y: auto;
+
+  }
+
+  .form-receita::-webkit-scrollbar {
+    width: 10px;
+    background: #f1f1f1;
+    border-radius: 8px;
+  }
+
+  .form-receita::-webkit-scrollbar-thumb {
+    width: 10px;
+    background: #dcdada;
+    border-radius: 8px;
+
+  }
+
+  .form-ingrediente {
+    flex: 1;
+    border: 1px solid var(--cor-borda);
+    border-radius: 20px;
+    padding: 25px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+
+      .lista-ingrediente-container {
+        overflow-y: auto;
+        flex: 1;
+        margin-bottom: 20px;
+        padding-right: 10px;
+
+        .lista-ingrediente {
+          border-bottom: 1px dashed #ccc;
+          margin-bottom: 15px;
+          padding-bottom: 10px;
+
+          &:last-of-type {
+            border-bottom: none;
+          }
+        }
+      }
+
+      .lista-ingrediente-container::-webkit-scrollbar {
+        width: 10px;
+        background: #f1f1f1;
+        border-radius: 8px;
+      }
+
+      .lista-ingrediente-container::-webkit-scrollbar-thumb {
+        width: 10px;
+        background: #dcdada;
+        border-radius: 8px;
+
+      }
+
+      button {
+        background-color: transparent;
+        color: var(--cor-secundaria);
+        border: 2px dashed var(--cor-secundaria);
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.2s;
+        width: 100%;
+        flex-shrink: 0;
+
+        &:hover {
+          background-color: rgba(98, 0, 238, 0.05);
+        }
+      }
+    }
+  }
+
+
+  .salvar-receita {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: auto;
+
+    button {
+      background-color: var(--cor-primaria);
+      color: #f7f3f0;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.1s, background-color 0.2s;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: var(--cor-secundaria);
+        transform: translateY(-2px) translateX(0);
+
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding-bottom: 90px;
+
+    .form-receita,
+    .form-ingrediente {
+      flex: none;
+      width: 100%;
+      overflow: visible;
+
+    }
+
+    .form-ingrediente form {
+      overflow: visible;
+
+      .lista-ingrediente-container {
+        overflow: visible;
+      }
+    }
+
+    .salvar-receita {
+      position: fixed;
+      bottom: 15px;
+      width: calc(100% - 40px);
+      left: 20px;
+      transform: none;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="fechar-dialog">
+    <button type="reset" (click)="fecharDialog()">X</button>
+
+  </div>
+  <div class="form-receita">
+
+    <div class="titulo-receita">
+      <h2>Add a new recipe:</h2>
+    </div>
+
+    <div class="form-receita-container">
+      <form>
+
+        <p>Title:</p>
+        <input type="text" placeholder="carrot cake" [formField]="receitaForm.title">
+
+        <p>Publisher:</p>
+        <input type="text" placeholder="Malenia" [formField]="receitaForm.publisher">
+
+        <p>Source Url: </p>
+        <input type="text" placeholder="https://sourceimage.com.br" [formField]="receitaForm.source_url">
+
+        <p>Image Url:</p>
+        <input type="text" placeholder="image.jpeg (support all extension)" [formField]="receitaForm.image_url">
+
+        <p>Servings:</p>
+        <input type="number"  [formField]="receitaForm.servings">
+
+        <p>Cooking Time:</p>
+        <input type="time" [formField]="receitaForm.cooking_time">
+
+      </form>
+    </div>
+
+
+  </div>
+
+  <div class="form-ingrediente">
+    <div class="titulo-ingrediente">
+      <h2>Add ingredients:</h2>
+    </div>
+
+    <form>
+      <div class="lista-ingrediente-container">
+        @for (ingredientes of receitaForm.ingredients; track $index) {
+
+        <div class="lista-ingrediente">
+
+          <p>Quantity:</p>
+          <input type="number" [formField]="ingredientes.quantity">
+
+          <p>Unit:</p>
+          <input type="text" [formField]="ingredientes.unit">
+
+          <p>Description:</p>
+          <input type="text" [formField]="ingredientes.description">
+
+        </div>
+
+        }
+      </div>
+      <button type="button" (click)="adicionarIngrediente()"> Add more ingredients </button>
+
+    </form>
+  </div>
+
+  <div class="salvar-receita">
+    <button type="submit" (click)="criarReceita()">
+      Save Recipe
+    </button>
+
+  </div>
+
+</div>

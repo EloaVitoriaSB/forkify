@@ -4,81 +4,92 @@
 
 
 
-body{
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
   background: var(--cor-fundo);
 }
 
-h1{
+h1 {
   font-family: "DynaPuff", system-ui;
   color: var(--cor-primaria);
 }
 
-h2{
-    font-family: "Chewy", system-ui;
-    color: var(--cor-secundaria);
+h2 {
+  font-family: "Chewy", system-ui;
+  color: var(--cor-secundaria);
 }
 
-h3{
+h3 {
   font-family: "Schoolbell", cursive;
   font-size: 20px;
   color: var(--cor-quaternaria);
   font-weight: 200;
 }
 
-p{
+p {
   font-family: "Cause", cursive;
   color: var(--cor-texto);
 }
 
 
 .spinner {
-    position: fixed;
-    inset: 0;
+  position: fixed;
+  inset: 0;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    background: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
 
-    z-index: 99999;
+  z-index: 99999;
 
-    animation: fadeIn 0.2s ease;
+  animation: fadeIn 0.2s ease;
 
-    .loader {
-        width: 64px;
-        height: 64px;
-
-        border-radius: 50%;
-
-        border: 4px solid rgba(209, 114, 25, 0.15);
-        border-top: 4px solid var(--primary-color);
-
-        animation: spin 0.7s linear infinite;
-
-    }
+ .loader {
+  width: 50px;
+  aspect-ratio: 1;
+  display:grid;
+  -webkit-mask: conic-gradient(from 15deg,#0000,#000);
+  mask: conic-gradient(from 15deg,#0000,#000);
+  animation: l26 1s infinite steps(12);
+}
+.loader,
+.loader:before,
+.loader:after{
+  background:
+    radial-gradient(closest-side at 50% 12.5%,
+     #e47a00 96%,#0000) 50% 0/20% 80% repeat-y,
+    radial-gradient(closest-side at 12.5% 50%,
+     #e47a00 96%,#0000) 0 50%/80% 20% repeat-x;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  transform: rotate(30deg);
+}
+.loader:after {
+  transform: rotate(60deg);
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+@keyframes l26 {
+  100% {transform:rotate(1turn)}
+}
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        backdrop-filter: blur(0px);
-    }
 
-    to {
-        opacity: 1;
-        backdrop-filter: blur(6px);
-    }
+.cdk-overlay-container {
+  position: fixed;
+  z-index: 1000;
 }
+
+.cdk-overlay-backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
 
