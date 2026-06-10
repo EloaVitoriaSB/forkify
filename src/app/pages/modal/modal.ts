@@ -5,6 +5,7 @@ import { FormField, form, required } from '@angular/forms/signals';
 import { ReceitasService } from '../../core/services/receitas.service';
 import { Receita } from '../../core/models/receita.model';
 
+
 @Component({
   selector: 'app-modal',
   imports: [FormField],
@@ -27,7 +28,7 @@ export class Modal {
     servings: 0,
     ingredients: [
       {
-        quantity: 0,
+        quantity: null,
         unit: '',
         description: ''
       }
@@ -35,33 +36,74 @@ export class Modal {
   });
 
   receitaForm = form(this.receitaModel, (schemaPath) => {
-    required(schemaPath.title, {message: 'title is required'});
-    required(schemaPath.publisher, {message: 'publisher is required'});
-    required(schemaPath.source_url, {message: 'source url is required'});
-    required(schemaPath.image_url, {message: 'image url is required'});
-    required(schemaPath.servings, {message: 'servings is required'});
-    required(schemaPath.cooking_time, {message: 'cooking time is required'});
+    required(schemaPath.title, {
+      message: 'title is required'
+    });
+
+    required(schemaPath.source_url, {
+      message: 'source url is required'
+    });
+
+    required(schemaPath.image_url, {
+      message: 'image url is required'
+    });
+
+    required(schemaPath.publisher, {
+      message: 'publisher is required'
+    });
+
+    required(schemaPath.cooking_time, {
+      message: ' invalid cooking time',
+      when: ({valueOf}) => valueOf(schemaPath.cooking_time) > 0
+    })
+
+    required(schemaPath.servings, {
+      message: ' Sorry, servings is required! Its only allowed numbers greaters than zero  ',
+      when: ({ valueOf }) => valueOf(schemaPath.servings) > 0,
+    });
+
+
+
   });
 
   adicionarIngrediente() {
     this.receitaModel.update(receita => ({
       ...receita,
-      ingredients: [...receita.ingredients, { quantity: null, unit: '', description: ''}],
+      ingredients: [...receita.ingredients, { quantity: null, unit: '', description: '' }],
     }))
   };
 
   criarReceita() {
-    const enviarReceita = this.receitaModel();
+    const dadosFormulario = this.receitaModel();
 
-    this.receitaService.postReceita(enviarReceita)
+    const enviarReceita = {
+      title: dadosFormulario.title ? dadosFormulario.title.trim() : '',
+      source_url: dadosFormulario.source_url ? dadosFormulario.source_url.trim() : '',
+      image_url: dadosFormulario.image_url ? dadosFormulario.image_url.trim() : '',
+      publisher: dadosFormulario.publisher ? dadosFormulario.publisher.trim() : '',
+      cooking_time: Number(dadosFormulario.cooking_time),
+      servings: Number(dadosFormulario.servings),
+      ingredients: dadosFormulario.ingredients.map(ing => ({
+        quantity: ing.quantity ? Number(ing.quantity) : null,
+        unit: ing.unit ? ing.unit.trim() : '',
+        description: ing.description ? ing.description.trim() : '',
+      })),
+    };
+
+    console.log("=== Texto JSON ===");
+    console.log(JSON.stringify(enviarReceita, null, 2));
+    console.log("============================");
+
+    this.receitaService.postReceita(enviarReceita as any)
       .subscribe({
         next: (res) => {
           this.receitaModel.set(res.data.recipe);
-          console.log("Receita criada com sucesso");
+          console.log("Receita criada com sucesso", res.data.recipe);
           this.fecharDialog();
         },
-        error: () => {
+        error: (err) => {
           console.log("Erro ao criar nova receita!")
+          console.log(err)
         },
       })
   }
