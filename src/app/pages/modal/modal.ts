@@ -1,7 +1,8 @@
+import { Ingrediente } from './../../core/models/receita.model';
 
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ɵEVENT_REPLAY_QUEUE } from '@angular/core';
 import { DialogRef } from '@angular/cdk/dialog';
-import { FormField, form, required } from '@angular/forms/signals';
+import { FormField, SchemaPath, form, pattern, required, validate } from '@angular/forms/signals';
 import { ReceitasService } from '../../core/services/receitas.service';
 import { Receita } from '../../core/models/receita.model';
 
@@ -35,17 +36,40 @@ export class Modal {
     ]
   });
 
+  url(path: SchemaPath<string>, options?: { message?: string }) {
+    validate(path, ({ value }) => {
+      try {
+        new URL(value());
+        return null;
+      } catch {
+        return {
+          kind: 'url',
+          message: options?.message || 'Enter a valid URL',
+        };
+      }
+    });
+  }
+
   receitaForm = form(this.receitaModel, (schemaPath) => {
     required(schemaPath.title, {
-      message: 'title is required'
+      message: 'title is required',
+
     });
 
-    required(schemaPath.source_url, {
-      message: 'source url is required'
+    pattern(schemaPath.source_url, /^[a-zA-Z0-9_-]+$/, {
+      message: 'invalid source url'
     });
 
-    required(schemaPath.image_url, {
-      message: 'image url is required'
+    this.url(schemaPath.source_url, {
+      message: 'Plase enter a valid website URL'
+    });
+
+    pattern(schemaPath.image_url, /^[a-zA-Z0-9_-]+$/, {
+      message: 'invalid source url'
+    });
+
+    this.url(schemaPath.image_url, {
+      message: 'Plase enter a valid image URL'
     });
 
     required(schemaPath.publisher, {
@@ -54,16 +78,42 @@ export class Modal {
 
     required(schemaPath.cooking_time, {
       message: ' invalid cooking time',
-      when: ({valueOf}) => valueOf(schemaPath.cooking_time) > 0
+      when: ({ valueOf }) => valueOf(schemaPath.cooking_time) <= 0
     })
 
     required(schemaPath.servings, {
       message: ' Sorry, servings is required! Its only allowed numbers greaters than zero  ',
-      when: ({ valueOf }) => valueOf(schemaPath.servings) > 0,
+      when: ({ valueOf }) => valueOf(schemaPath.servings) <= 0,
     });
 
+    validate(schemaPath.ingredients, ({ value }) => {
+      const ingredients = value();
+      const naoTemQuantity = ingredients.some(ingredient => ingredient.quantity == null || ingredient.quantity <= 0);
+      if (naoTemQuantity) {
+        return {
+          kind: 'required',
+          message: 'quantity is required',
+        };
+      }
 
+      const naoTemUnit = ingredients.some(ingredient => ingredient.unit.length >= 7 || ingredient.unit == null);
+      if (naoTemUnit) {
+        return {
+          kind: 'required',
+          message: 'unit is required and must be 7 characters or less',
+        };
+      }
 
+      const naoTemDescription = ingredients.some(ingredient => ingredient.description == null);
+      if(naoTemDescription){
+        return{
+          kind: 'required',
+          message: 'description is required'
+        }
+      }
+
+      return null;
+    });
   });
 
   adicionarIngrediente() {
