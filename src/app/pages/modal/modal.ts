@@ -67,17 +67,17 @@ export class Modal {
 
     required(schemaPath.cooking_time, {
       message: ' invalid cooking time',
-      when: ({ valueOf }) => valueOf(schemaPath.cooking_time) <= 0
+      when: ({ valueOf }) => valueOf(schemaPath.cooking_time) < 0 || valueOf(schemaPath.cooking_time) == 0,
     })
 
     required(schemaPath.servings, {
       message: ' Sorry, servings is required! Its only allowed numbers greaters than zero  ',
-      when: ({ valueOf }) => valueOf(schemaPath.servings) <= 0,
+      when: ({ valueOf }) => valueOf(schemaPath.servings) < 0 || valueOf(schemaPath.servings) == 0,
     });
 
     validate(schemaPath.ingredients, ({ value }) => {
       const ingredients = value();
-      const naoTemQuantity = ingredients.some(ing => ing.quantity == null || ing.quantity <= 0);
+      const naoTemQuantity = ingredients.some(ing => ing.quantity == null || ing.quantity == 0 || ing.quantity < 0);
       if (naoTemQuantity) {
         return {
           kind: 'required',
