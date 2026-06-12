@@ -1,11 +1,8 @@
-import { Ingrediente } from './../../core/models/receita.model';
-
 import { Component, inject, signal, ɵEVENT_REPLAY_QUEUE } from '@angular/core';
 import { DialogRef } from '@angular/cdk/dialog';
 import { FormField, SchemaPath, form, pattern, required, validate } from '@angular/forms/signals';
 import { ReceitasService } from '../../core/services/receitas.service';
 import { Receita } from '../../core/models/receita.model';
-
 
 @Component({
   selector: 'app-modal',
@@ -13,6 +10,7 @@ import { Receita } from '../../core/models/receita.model';
   templateUrl: './modal.html',
   styleUrl: './modal.scss',
 })
+
 export class Modal {
 
   private receitaService = inject(ReceitasService);
@@ -53,19 +51,10 @@ export class Modal {
   receitaForm = form(this.receitaModel, (schemaPath) => {
     required(schemaPath.title, {
       message: 'title is required',
-
-    });
-
-    pattern(schemaPath.source_url, /^[a-zA-Z0-9_-]+$/, {
-      message: 'invalid source url'
     });
 
     this.url(schemaPath.source_url, {
       message: 'Plase enter a valid website URL'
-    });
-
-    pattern(schemaPath.image_url, /^[a-zA-Z0-9_-]+$/, {
-      message: 'invalid source url'
     });
 
     this.url(schemaPath.image_url, {
@@ -88,15 +77,15 @@ export class Modal {
 
     validate(schemaPath.ingredients, ({ value }) => {
       const ingredients = value();
-      const naoTemQuantity = ingredients.some(ingredient => ingredient.quantity == null || ingredient.quantity <= 0);
+      const naoTemQuantity = ingredients.some(ing => ing.quantity == null || ing.quantity <= 0);
       if (naoTemQuantity) {
         return {
           kind: 'required',
-          message: 'quantity is required',
+          message: 'quantity is required and must be greater than 0',
         };
       }
 
-      const naoTemUnit = ingredients.some(ingredient => ingredient.unit.length >= 7 || ingredient.unit == null);
+      const naoTemUnit = ingredients.some(ingredient => ingredient.unit.trim().length >= 7 || !ingredient.unit);
       if (naoTemUnit) {
         return {
           kind: 'required',
@@ -104,14 +93,13 @@ export class Modal {
         };
       }
 
-      const naoTemDescription = ingredients.some(ingredient => ingredient.description == null);
-      if(naoTemDescription){
-        return{
+      const naoTemDescription = ingredients.some(ingredient => !ingredient.description || ingredient.description.trim() === '');
+      if (naoTemDescription) {
+        return {
           kind: 'required',
           message: 'description is required'
         }
       }
-
       return null;
     });
   });
@@ -124,6 +112,12 @@ export class Modal {
   };
 
   criarReceita() {
+
+    if ((this.receitaForm as any).invalid) {
+      console.log('form invalid');
+      return;
+    }
+
     const dadosFormulario = this.receitaModel();
 
     const enviarReceita = {
@@ -140,9 +134,9 @@ export class Modal {
       })),
     };
 
-    console.log("=== Texto JSON ===");
+    console.log(" Inicio Texto JSON");
     console.log(JSON.stringify(enviarReceita, null, 2));
-    console.log("============================");
+    console.log("Fim Texto JSON");
 
     this.receitaService.postReceita(enviarReceita as any)
       .subscribe({
