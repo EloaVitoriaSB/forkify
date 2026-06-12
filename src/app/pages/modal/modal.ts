@@ -1,6 +1,6 @@
 import { Component, inject, signal, ɵEVENT_REPLAY_QUEUE } from '@angular/core';
 import { DialogRef } from '@angular/cdk/dialog';
-import { FormField, SchemaPath, form, pattern, required, validate } from '@angular/forms/signals';
+import { FormField, SchemaPath, form, pattern, required, validate, min } from '@angular/forms/signals';
 import { ReceitasService } from '../../core/services/receitas.service';
 import { Receita } from '../../core/models/receita.model';
 
@@ -67,13 +67,18 @@ export class Modal {
 
     required(schemaPath.cooking_time, {
       message: ' invalid cooking time',
-      when: ({ valueOf }) => valueOf(schemaPath.cooking_time) < 0 || valueOf(schemaPath.cooking_time) == 0,
-    })
+    });
+    min(schemaPath.cooking_time, 1, {
+      message:'Sorry is only allowed numbers greaters than 0'
+    });
 
     required(schemaPath.servings, {
       message: ' Sorry, servings is required! Its only allowed numbers greaters than zero  ',
-      when: ({ valueOf }) => valueOf(schemaPath.servings) < 0 || valueOf(schemaPath.servings) == 0,
     });
+    min(schemaPath.servings, 1, {
+      message:'Sorry is only allowed numbers greaters than 0'
+    });
+
 
     validate(schemaPath.ingredients, ({ value }) => {
       const ingredients = value();
@@ -125,8 +130,8 @@ export class Modal {
       source_url: dadosFormulario.source_url ? dadosFormulario.source_url.trim() : '',
       image_url: dadosFormulario.image_url ? dadosFormulario.image_url.trim() : '',
       publisher: dadosFormulario.publisher ? dadosFormulario.publisher.trim() : '',
-      cooking_time: Number(dadosFormulario.cooking_time),
-      servings: Number(dadosFormulario.servings),
+      cooking_time: dadosFormulario.cooking_time,
+      servings:dadosFormulario.servings,
       ingredients: dadosFormulario.ingredients.map(ing => ({
         quantity: ing.quantity ? Number(ing.quantity) : null,
         unit: ing.unit ? ing.unit.trim() : '',
