@@ -7,7 +7,7 @@
 <div class="container">
 
   <a (click)="voltarPagina()"><svg fill="#e87102" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink" width="50px" height="50px" viewBox="0 0 70 70"
+      xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 70 70"
       enable-background="new 0 0 70 70" xml:space="preserve" stroke="#e87102">
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
       <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -36,16 +36,24 @@
 
     <div class="conteudo-receita">
 
-      @for (receita of receitas(); track receita.id){
-      <div class="foto-receita">
-        <img [src]="receita.image_url " [alt]="receita.title" loading="lazy" />
-      </div>
+      <div class="cabecalho-receita">
+        @for (receita of receitas(); track receita.id){
+        <div class="foto-receita">
+          <img [src]="receita.image_url " [alt]="receita.title" loading="lazy" />
+        </div>
 
-      <div class="titulo-receita">
-        <h1>{{ receita.title }}</h1>
-        <p>{{ receita.publisher }}</p>
+        <div class="titulo-receita">
+          <h1>{{ receita.title }}</h1>
+          <p>{{ receita.publisher }}</p>
+          <div class="detalhes">
+            <p class="detalhes-receita"> {{ receita.cooking_time }} min </p>
+            <p class="detalhes-receita"> {{ receita.servings}} peoples </p>
+          </div>
+          <p class="saber-mais">To learn more, visit the website: </p>
+          <a [href]="receita.source_url" target="_blank"> {{receita.source_url}}</a>
+        </div>
+        }
       </div>
-      }
 
       <div class="ingredientes">
 
@@ -60,4 +68,5 @@
 
       </div>
     </div>
-  </div>
+</div>
+

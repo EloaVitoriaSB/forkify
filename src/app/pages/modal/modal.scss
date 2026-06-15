@@ -14,7 +14,7 @@
   input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 14px;
@@ -37,7 +37,7 @@
     margin: 0 0 5px 0;
     font-size: 14px;
     font-weight: 500;
-    color: var(--cor-terciaria);
+    color: var(--cor-texto);
   }
 
   h2 {
@@ -163,8 +163,8 @@
 
     button {
       background-color: transparent;
-      color: var(--cor-secundaria);
-      border: 2px dashed var(--cor-secundaria);
+      color: var(--cor-primaria);
+      border: 2px dashed var(--cor-primaria);
       padding: 10px;
       border-radius: 8px;
       cursor: pointer;
