@@ -1,6 +1,6 @@
-import { Component, inject, signal, ɵEVENT_REPLAY_QUEUE } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DialogRef } from '@angular/cdk/dialog';
-import { FormField, SchemaPath, form, pattern, required, validate, min } from '@angular/forms/signals';
+import { FormField, SchemaPath, form, required, validate, min, applyEach } from '@angular/forms/signals';
 import { ReceitasService } from '../../core/services/receitas.service';
 import { Receita } from '../../core/models/receita.model';
 
@@ -69,43 +69,41 @@ export class Modal {
       message: ' invalid cooking time',
     });
     min(schemaPath.cooking_time, 1, {
-      message:'Sorry is only allowed numbers greaters than 0'
+      message: 'Sorry is only allowed numbers greaters than 0'
     });
 
     required(schemaPath.servings, {
       message: ' Sorry, servings is required! Its only allowed numbers greaters than zero  ',
     });
     min(schemaPath.servings, 1, {
-      message:'Sorry is only allowed numbers greaters than 0'
+      message: 'Sorry is only allowed numbers greaters than 0'
     });
 
+    applyEach(schemaPath.ingredients, (ingredient) => {
 
-    validate(schemaPath.ingredients, ({ value }) => {
-      const ingredients = value();
-      const naoTemQuantity = ingredients.some(ing => ing.quantity == null || ing.quantity == 0 || ing.quantity < 0);
-      if (naoTemQuantity) {
-        return {
-          kind: 'required',
-          message: 'quantity is required and must be greater than 0',
-        };
-      }
-
-      const naoTemUnit = ingredients.some(ingredient => ingredient.unit.trim().length >= 7 || !ingredient.unit);
-      if (naoTemUnit) {
-        return {
-          kind: 'required',
-          message: 'unit is required and must be 7 characters or less',
-        };
-      }
-
-      const naoTemDescription = ingredients.some(ingredient => !ingredient.description || ingredient.description.trim() === '');
-      if (naoTemDescription) {
-        return {
-          kind: 'required',
-          message: 'description is required'
+      validate(ingredient.quantity, ({ value }) => {
+        const quant = value();
+        if (quant === null || quant === undefined || String(quant).trim() === '' || Number(quant) <= 0) {
+          return { kind: 'required', message: 'Quantity is required and must be greater than 0' };
         }
-      }
-      return null;
+        return null;
+      });
+
+      validate(ingredient.unit, ({ value }) => {
+        const unit = value();
+        if (!unit || unit.trim().length === 0 || unit.trim().length > 7) {
+          return { kind: 'required', message: 'Unit is required and must be 7 characters or less' };
+        }
+        return null;
+      });
+
+      validate(ingredient.description, ({ value }) => {
+        const desc = value();
+        if (!desc || desc.trim() === '') {
+          return { kind: 'required', message: 'Description is required' };
+        }
+        return null;
+      });
     });
   });
 
@@ -131,7 +129,7 @@ export class Modal {
       image_url: dadosFormulario.image_url ? dadosFormulario.image_url.trim() : '',
       publisher: dadosFormulario.publisher ? dadosFormulario.publisher.trim() : '',
       cooking_time: dadosFormulario.cooking_time,
-      servings:dadosFormulario.servings,
+      servings: dadosFormulario.servings,
       ingredients: dadosFormulario.ingredients.map(ing => ({
         quantity: ing.quantity ? Number(ing.quantity) : null,
         unit: ing.unit ? ing.unit.trim() : '',

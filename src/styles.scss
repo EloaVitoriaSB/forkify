@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'theme.scss';
-@import url('https://fonts.googleapis.com/css2?family=Cause:wght@100..900&family=Chewy&family=DynaPuff:wght@400..700&family=Schoolbell&family=Sniglet:wght@400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cause:wght@100..900&family=Chewy&family=DynaPuff:wght@400..700&family=Schoolbell&family=Sniglet:wght@400;800&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
 
 
 
@@ -34,6 +34,17 @@ p {
   color: var(--cor-texto);
 }
 
+button {
+  font-family: "Cause", cursive;
+}
+
+.titulo-form {
+  font-family: "Sour Gummy", sans-serif;
+}
+
+.texto-form {
+  font-family: "Sniglet", system-ui;
+}
 
 .spinner {
   position: fixed;
@@ -50,36 +61,41 @@ p {
 
   animation: fadeIn 0.2s ease;
 
- .loader {
-  width: 50px;
-  aspect-ratio: 1;
-  display:grid;
-  -webkit-mask: conic-gradient(from 15deg,#0000,#000);
-  mask: conic-gradient(from 15deg,#0000,#000);
-  animation: l26 1s infinite steps(12);
-}
-.loader,
-.loader:before,
-.loader:after{
-  background:
-    radial-gradient(closest-side at 50% 12.5%,
-     #e47a00 96%,#0000) 50% 0/20% 80% repeat-y,
-    radial-gradient(closest-side at 12.5% 50%,
-     #e47a00 96%,#0000) 0 50%/80% 20% repeat-x;
-}
-.loader:before,
-.loader:after {
-  content: "";
-  grid-area: 1/1;
-  transform: rotate(30deg);
-}
-.loader:after {
-  transform: rotate(60deg);
-}
+  .loader {
+    width: 50px;
+    aspect-ratio: 1;
+    display: grid;
+    -webkit-mask: conic-gradient(from 15deg, #0000, #000);
+    mask: conic-gradient(from 15deg, #0000, #000);
+    animation: l26 1s infinite steps(12);
+  }
 
-@keyframes l26 {
-  100% {transform:rotate(1turn)}
-}
+  .loader,
+  .loader:before,
+  .loader:after {
+    background:
+      radial-gradient(closest-side at 50% 12.5%,
+        #e47a00 96%, #0000) 50% 0/20% 80% repeat-y,
+      radial-gradient(closest-side at 12.5% 50%,
+        #e47a00 96%, #0000) 0 50%/80% 20% repeat-x;
+  }
+
+  .loader:before,
+  .loader:after {
+    content: "";
+    grid-area: 1/1;
+    transform: rotate(30deg);
+  }
+
+  .loader:after {
+    transform: rotate(60deg);
+  }
+
+  @keyframes l26 {
+    100% {
+      transform: rotate(1turn)
+    }
+  }
 }
 
 
@@ -91,5 +107,3 @@ p {
 .cdk-overlay-backdrop {
   background: rgba(0, 0, 0, 0.5);
 }
-
-

@@ -7,71 +7,65 @@
   <form>
     <div class="form-receita">
 
-      <div class="titulo-receita">
-        <h2>Add a new recipe:</h2>
-      </div>
+
+      <h2 class="titulo-form">Add a new recipe:</h2>
 
 
-        <p>Title:</p>
-        <input type="text" placeholder="carrot cake" inputmode="text" [formField]="receitaForm.title">
-        @if(receitaForm.title().invalid()){
-        <p class="erros"> Title has validation errors </p>
-          @for (error of receitaForm.title().errors(); track error) {
-          <p class="mesagem-erro"> {{ error.message }} </p>
-          }
-        }
 
-        <p>Source Url: </p>
-        <input type="url" inputmode="url" placeholder="https://sourceimage.com.br" [formField]="receitaForm.source_url">
-        @if(receitaForm.source_url().invalid()){
-        <p class="erros"> Source Url has validation errors </p>
-          @for (error of receitaForm.source_url().errors(); track error) {
-          <p class="mesagem-erro"> {{ error.message }} </p>
-          }
-        }
+      <p class="texto-form">Title:</p>
+      <input type="text" placeholder="carrot cake" inputmode="text" [formField]="receitaForm.title">
+      @if(receitaForm.title().invalid()){
+      @for (error of receitaForm.title().errors(); track error) {
+      <p class="mesagem-erro"> {{ error.message }} </p>
+      }
+      }
 
-        <p>Image Url:</p>
-        <input type="url" inputmode="url" placeholder="https://image.jpeg (support all extension)" [formField]="receitaForm.image_url">
-        @if(receitaForm.image_url().invalid()){
-        <p class="erros"> Image Url has validation errors </p>
-          @for (error of receitaForm.image_url().errors(); track error) {
-          <p class="mesagem-erro"> {{ error.message }} </p>
-          }
-        }
+      <p class="texto-form">Source Url: </p>
+      <input type="url" inputmode="url" placeholder="https://sourceimage.com.br" [formField]="receitaForm.source_url">
+      @if(receitaForm.source_url().invalid()){
+      @for (error of receitaForm.source_url().errors(); track error) {
+      <p class="mesagem-erro"> {{ error.message }} </p>
+      }
+      }
 
-        <p>Publisher:</p>
-        <input type="text" placeholder="Malenia" inputmode="text" [formField]="receitaForm.publisher">
-        @if(receitaForm.publisher().invalid()){
-        <p class="erros"> Publisher has validation errors </p>
+      <p class="texto-form">Image Url:</p>
+      <input type="url" inputmode="url" placeholder="https://image.jpeg (support all extension)"
+        [formField]="receitaForm.image_url">
+      @if(receitaForm.image_url().invalid()){
+      @for (error of receitaForm.image_url().errors(); track error) {
+      <p class="mesagem-erro"> {{ error.message }} </p>
+      }
+      }
 
-          @for (error of receitaForm.publisher().errors(); track error) {
-          <p class="mesagem-erro"> {{ error.message }} </p>
-          }
-        }
+      <p class="texto-form">Publisher:</p>
+      <input type="text" placeholder="Malenia" inputmode="text" [formField]="receitaForm.publisher">
+      @if(receitaForm.publisher().invalid()){
+      @for (error of receitaForm.publisher().errors(); track error) {
+      <p class="mesagem-erro"> {{ error.message }} </p>
+      }
+      }
 
-        <p>Cooking Time:</p>
-        <input type="number" [formField]="receitaForm.cooking_time">
-        @if(receitaForm.cooking_time().invalid()){
-        <p class="erros"> Cooking Time has validation errors </p>
-          @for (error of receitaForm.cooking_time().errors(); track error) {
-          <p class="mesagem-erro"> {{ error.message }} </p>
-          }
-        }
+      <p class="texto-form">Cooking Time:</p>
+      <input type="number" [formField]="receitaForm.cooking_time">
+      @if(receitaForm.cooking_time().invalid()){
+      @for (error of receitaForm.cooking_time().errors(); track error) {
+      <p class="mesagem-erro"> {{ error.message }} </p>
+      }
+      }
 
-        <p>Servings:</p>
-        <input type="number" [formField]="receitaForm.servings">
-        @if(receitaForm.servings().invalid()){
-        <p class="erros"> Servings has validation errors </p>
-          @for (error of receitaForm.servings().errors(); track error) {
-          <p class="mesagem-erro"> {{ error.message }} </p>
-          }
-        }
-      </div>
+      <p class="texto-form">Servings:</p>
+      <input type="number" [formField]="receitaForm.servings">
+      @if(receitaForm.servings().invalid()){
+      @for (error of receitaForm.servings().errors(); track error) {
+      <p class="mesagem-erro"> {{ error.message }} </p>
+      }
+      }
+    </div>
 
     <div class="form-ingrediente-container">
-      <div class="titulo-ingrediente">
-        <h2>Add ingredients:</h2>
-      </div>
+
+      <h2 class="titulo-form">Add ingredients:</h2>
+
 
       <div class="form-ingrediente">
         <div class="lista-ingrediente-container">
@@ -79,33 +73,28 @@
 
           <div class="lista-ingrediente">
 
-            <p>Quantity:</p>
+            <p class="texto-form">Quantity:</p>
             <input type="number" [formField]="ingredientes.quantity">
             @if(ingredientes.quantity().errors()){
-              <p class="erros"> Quantity has validation errors </p>
-              @for (error of ingredientes.quantity().errors(); track error) {
-              <p class="mesagem-erro"> {{ error.message }} </p>
-              }
+            @for (error of ingredientes.quantity().errors(); track error) {
+            <p class="mesagem-erro"> {{ error.message }} </p>
+            }
             }
 
-            <p>Unit:</p>
+            <p class="texto-form">Unit:</p>
             <input type="text" placeholder="Pounds" inputmode="text" [formField]="ingredientes.unit">
             @if(ingredientes.unit().errors()){
-            <p class="erros"> Unit has validation errors </p>
-
-              @for (error of ingredientes.unit().errors(); track error) {
-              <p class="mesagem-erro"> {{ error.message }} </p>
-              }
+            @for (error of ingredientes.unit().errors(); track error) {
+            <p class="mesagem-erro"> {{ error.message }} </p>
+            }
             }
 
-            <p>Description:</p>
+            <p class="texto-form">Description:</p>
             <input type="text" placeholder="sugar" [formField]="ingredientes.description">
             @if(ingredientes.description().errors()){
-            <p class="erros"> Description has validation errors </p>
-
-              @for (error of ingredientes.description().errors(); track error) {
-              <p class="mesagem-erro"> {{ error.message }} </p>
-              }
+            @for (error of ingredientes.description().errors(); track error) {
+            <p class="mesagem-erro"> {{ error.message }} </p>
+            }
             }
           </div>
           }
