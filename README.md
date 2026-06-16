@@ -1,4 +1,4 @@
-# Esse projeto foi baseado no trabalho original @Jonas Schmedtmann 
+# Esse projeto foi baseado no trabalho original @jonasschmedtmann
 https://github.com/jonasschmedtmann
 
 # Forkify
