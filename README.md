@@ -5,7 +5,7 @@ https://github.com/jonasschmedtmann
 
 Os dados de receitas (ingredientes, imagens e buscas) utilizados nesta aplicação foram consumidos da **Forkify API**, criada e mantida por [Jonas Schmedtmann]([https://github.com](https://github.com/jonasschmedtmann)). 
 
-* **Documentação da API:** [Forkify API v2](https://herokuapp.com)
+* **Documentação da API:** [Forkify API v2](https://forkify-api.herokuapp.com/)
 
 # Forkify
 
