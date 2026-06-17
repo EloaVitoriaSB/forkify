@@ -1,4 +1,11 @@
-Esse projeto foi baseado no trabalho original @jonasschmedtmann
+# Esse projeto foi baseado no trabalho original Jonas Schmedtmann
+https://github.com/jonasschmedtmann
+
+##  API Utilizada
+
+Os dados de receitas (ingredientes, imagens e buscas) utilizados nesta aplicação foram consumidos da **Forkify API**, criada e mantida por [Jonas Schmedtmann]([https://github.com](https://github.com/jonasschmedtmann)). 
+
+* **Documentação da API:** [Forkify API v2](https://forkify-api.herokuapp.com/)
 
 # Forkify
 
